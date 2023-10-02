@@ -1,0 +1,43 @@
+
+.customer-page__header {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.customer-list, .customer-form {
+    height: 449px;
+    overflow-y: auto;
+    background: white;
+    padding: 20px;
+}
+.customer-form {
+    margin: 10px;
+}
+.customer-list{
+    width: 820px;
+    position: relative;
+}
+.customer-form {
+    width: 550px;
+    height: 530px;
+    background: white;
+    padding: 20px;
+}
+.customer-list table {
+    width: 100%;
+}
+
+.customer-list__wrapper{
+    background: white;
+    padding: 20px;
+    height: 627px;
+    margin: 10px;
+}
+.customer-name{
+    text-transform: capitalize;
+}

@@ -1,0 +1,93 @@
+
+    <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="25px">
+      <div fxLayout="column" fxLayoutAlign="start start" class="customer-list__wrapper">
+        <div>
+          <mat-form-field fxFlex appearance="outline" floatLabel="always">
+            <mat-label>SEARCH CUSTOMER</mat-label>
+            <input matInput [(ngModel)]="searchCustomerInput" (ngModelChange)="searchCustomer()">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+        
+      <div fxLayout="column" class="customer-list">
+          <table  mat-table [dataSource]="historyDataSource">  
+
+                <ng-container matColumnDef="cus_name">
+                  <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+                  <td mat-cell class="customer-name" *matCellDef="let element"> {{element.cus_name}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="cus_no">
+                  <th mat-header-cell *matHeaderCellDef> Contact # </th>
+                  <td mat-cell *matCellDef="let element"> {{element.cus_no}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="cus_note">
+                  <th mat-header-cell *matHeaderCellDef> Note </th>
+                  <td mat-cell *matCellDef="let element"> {{element.cus_note}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cus_cat">
+                  <th mat-header-cell *matHeaderCellDef> Status </th>
+                  <td mat-cell *matCellDef="let element"> {{element.cus_cat}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element">
+                      <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="15px">
+                          <button class="btn-icon__default btn-icon__edit" mat-icon-button (click)="patchCustomerForm(element)">
+                              <mat-icon>edit</mat-icon>
+                          </button>
+                          <button class="btn-icon__default btn-icon__delete"mat-icon-button (click)="alertMessage(element)">
+                              <mat-icon>delete_outline</mat-icon>
+                          </button>
+                      </div>              
+                  </td>
+                </ng-container>
+                <tr mat-header-row class="customer-table__header" *matHeaderRowDef="historyDisplayedColumns; sticky: true;"></tr>
+                <tr mat-row *matRowDef="let row; columns: historyDisplayedColumns;"></tr>
+          </table>      
+          <div class="no-result__wrapper" *ngIf="customers?.length === 0">
+              <span class="no-result">No results found</span>
+          </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end end">
+        <mat-paginator
+            [length]="pageLength"
+            [pageSize]="pageSize"
+            [pageIndex]="pageIndex"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="handlePageEvent($event)">
+        </mat-paginator>
+      </div>
+    </div>
+
+      <div class="customer-form">
+          <form [formGroup]="customerForm" fxLayout="column" fxLayoutGap="15px" fxFlex>
+              <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Customer's Name</mat-label>
+                  <input class="customer-name" formControlName="cus_name" type="text" matInput>
+              </mat-form-field>
+              <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Customer Contact #</mat-label>
+                  <input formControlName="cus_no" type="number" pattern="\d*" matInput>
+              </mat-form-field>
+              <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Status</mat-label>
+                  <mat-select formControlName="cus_cat_id">
+                      <mat-option [value]="cs.cus_cat_id" *ngFor="let cs of customerCat">{{cs.cus_cat_name}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Note</mat-label>
+                  <textarea [rows]="5" formControlName="cus_note" matInput></textarea>
+              </mat-form-field>
+              <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end end" fxFlex="25">
+                  <button *ngIf="toAdd" mat-raised-button class="btn__default btn__add" fxFlex="25" (click)="addCustomer()">Save</button>
+                  <button *ngIf="!toAdd" mat-flat-button  fxFlex="25" (click)="back()">Reset Form</button>
+                  <button *ngIf="!toAdd" mat-raised-button class="btn__default btn__add" fxFlex="25" (click)="updateCustomer()">Update Customer</button>
+              </div>
+          </form>
+      </div>
+    </div>

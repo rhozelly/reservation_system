@@ -1,0 +1,12 @@
+
+<div *ngIf="spinner"  class="spinner__wrapper-components">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="page__header">
+  <h2 class="page__title"><i class="fas fa-calendar-alt"></i> Calendar</h2>
+  <span class="breadcrumbs"><i class="fas fa-calendar-alt"></i> Calendar > <span class="current-page">View
+      Calendar</span></span>
+</div><!-- .page__header -->
+<div class="page__body">
+  <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+</div><!-- .page__body -->

@@ -1,0 +1,90 @@
+<div class="page__header">
+  <h2 class="page__title"><i class="fas fa-users"></i> Therapist</h2>
+  <span class="breadcrumbs">Therapist > <span class="current-page">View All Therapist</span></span>
+</div><!-- .page__header -->
+<div class="page__body">
+  <div class="spinner__wrapper"  *ngIf="progressLoader">
+      <mat-progress-bar class="progress-loader" mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div fxLayout="row wrap" class="members-page__header">
+    <div class="members-page__search">
+      <mat-form-field fxFlex appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput  [(ngModel)]="searchData" (ngModelChange)="searchbar()">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div><!-- .members-page__search -->
+    <div class="members-page__btn" fxLayoutGap="15px">
+      <button class="btn__default btn___warn" [disabled]="progressLoader" mat-flat-button (click)="setEveryoneToTimeIn()" >
+        <mat-icon>done_all</mat-icon>
+        Time in All
+      </button>
+      <button class="btn__default btn__add" [disabled]="progressLoader" mat-flat-button *ngIf="privsArray.add === 1" (click)="addNewMember()">
+        <mat-icon>add</mat-icon>
+        New Member
+      </button>
+    </div><!-- .members-page__btn -->
+  </div><!-- .members-page__header -->
+  <div class="table members-page__tbl">
+    <div class="table__wrapper">
+      <table class="table-list" mat-table [dataSource]="dataSource">the 
+        <ng-container matColumnDef="in">
+          <th mat-header-cell *matHeaderCellDef> In </th>
+          <td mat-cell *matCellDef="let element">
+            <section>
+              <mat-slide-toggle  [disabled]="progressLoader" (change)="toggle(element, $event)"
+                [checked]="element.mem_in">
+              </mat-slide-toggle>
+            </section>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.mem_name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="status__wrapper" [ngClass]="{'green-status' : element.mem_status === 'available',
+                  'red-status' :  element.mem_status === 'absent',
+                  'yellow-status' :  element.mem_status === 'not available'}">
+                <span class="status-badge">{{element.mem_status}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="branch">
+          <th mat-header-cell *matHeaderCellDef> Branch </th>
+          <td mat-cell *matCellDef="let element"> {{element.branch_name}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button class="btn-icon__default btn-icon__edit" [disabled]="progressLoader" mat-icon-button *ngIf="privsArray.update === 1 && element.mem_name !== 'TBA'"  (click)="editMember(element.mem_id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="btn-icon__default btn-icon__delete" [disabled]="progressLoader" mat-icon-button *ngIf="privsArray.delete === 1 && element.mem_name !== 'TBA'" (click)="alertMessage(element)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+       
+      </table>
+      <div class="no-result__wrapper" *ngIf="members?.length === 0">
+        <span class="no-result">No results found</span>
+      </div>
+    </div>
+
+    <mat-paginator
+      [length]="pageLength"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="handlePageEvent($event)">
+    </mat-paginator>
+  </div><!-- .members-page__tbl -->
+</div><!-- .page__body -->

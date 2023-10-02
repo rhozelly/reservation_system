@@ -1,0 +1,144 @@
+.bookings-time-grid__wrapper {
+    margin-top: -20px;
+    position: relative;
+}
+.booking__timegrid{
+    position: relative;
+}
+.bookings__legder {
+    position: absolute;
+    right: 29px; 
+    top: 28px;
+}
+.bookings{    
+    min-height: 620px;
+    margin-bottom: 50px;    
+    padding: 25px 40px 0 40px !important;
+}
+.bookings__header {    
+    margin-bottom: 20px;    
+}
+.bookings-page__tbl{
+    min-height: 550px;
+}
+.bookings-page__header {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.bookings-page__search {
+    margin-top: 13px;
+}
+.container__date {
+    font-family: 'Poppins';
+    width: 15%;
+}
+.container__name {
+    width: 18%;    
+    font-family: 'Poppins';
+    text-transform: uppercase;
+}
+.container__pax {
+    width: 5%;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+/* =========================
+        Calendar
+============================ */
+.bookings__time-grid {
+    padding: 24px;
+    margin-bottom: 100px;
+}
+.bookings-time-grid__header {
+    padding: 10px 21px 0;
+    position: absolute;
+    width: 100%;
+    left: 18%;
+}
+
+.dot__wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: -18px;
+}
+.dot__color {
+    border-radius: 4px;
+    padding: 7px;
+    display: block;
+    margin-right: 10px;
+}
+.dot__pending {
+    background-color: #87a2c7;    
+}
+.dot__arrived {
+    background-color: #f1bc64;    
+}
+.dot__spa-party {
+    background-color: #ff9acc;    
+}
+.dot__completed {
+    background-color: #63a338;    
+}
+.dot__cancelled {
+    background-color: #ce4f4b;    
+}
+.dot__no-show {
+    background-color: #2e0476;   
+
+}
+.dot__pending-clr {
+    color: #87a2c7;  
+    background: #8ca1c452;
+    padding: 4px 22px;
+    border-radius: 15px;
+}
+.dot__arrived-clr {
+    color: #f1bc64;    
+    background: #f1bc6438;
+    padding: 4px 22px;
+    border-radius: 15px; 
+}
+.dot__spa-party-clr {
+    color: #ff9acc;  
+    background: #ff9acc47;
+    padding: 4px 22px;
+    border-radius: 15px;   
+}
+.dot__completed-clr {
+    color: #63a338;    
+    background: #63a33842;
+    padding: 4px 22px;
+    border-radius: 15px; 
+}
+.dot__cancelled-clr {
+    color: #ce4f4b;   
+    background: #ce4f4b33;
+    padding: 4px 22px;
+    border-radius: 15px;  
+}
+.dot__no-show-clr {
+    color: #2e0476;   
+    background: #998af7a0;
+    padding: 4px 22px;
+    border-radius: 15px; 
+}
+/* fc-resource {
+    width: 170px !important;
+} */
+/* .calendar-container {
+    width: 300px;
+    overflow-x: scroll;
+}
+
+.calendar-container .fc-view > table {
+    width: 500px;
+} */
+.container__name {
+    text-transform: capitalize;
+}

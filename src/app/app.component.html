@@ -1,0 +1,89 @@
+<div [ngSwitch]="isLoggedIn">
+  <mat-drawer-container class="sidenav" *ngSwitchCase="true">
+    <mat-drawer #drawer mode="side">
+      <div class="sidenav__branding">
+        <div class="sidenav__logo-wrapper">
+          <img src="../assets/images/app/single-logo.png" alt="logo">
+        </div>
+      </div>
+      <div fxLayout="column" class="sidenav__panel-menu">
+          <mat-list role="list" *ngFor="let nav of navs">
+            <mat-list-item class="menu__item menu__item--{{nav.nav_name}}"
+                routerLinkActive            
+                [routerLinkActiveOptions]="{exact: true}"
+                routerLinkActive="active_class" 
+                #rla="routerLinkActive" 
+                *ngIf="nav.view === 1"
+                [routerLink]="role + '/' + nav.nav_name"
+                class="sidenav-list"
+                role="listitem"
+                (click)="drawer.toggle()">
+              {{nav.nav_name}}         
+            </mat-list-item>
+          </mat-list>
+          <div fxFlex></div>
+          <div class="avatar">
+              <div class="avatar__wrapper">
+                  <div class="avatar__img" [matMenuTriggerFor]="menu"></div>
+              </div>
+              <mat-menu #menu="matMenu" yPosition="above">
+                  <button mat-menu-item (click)="accounts(drawer)">
+                    <mat-icon>person</mat-icon>
+                    <span>Profile & account </span>
+                  </button>
+                  <button mat-menu-item *ngIf="role === 'super_admin'" (click)="settings()">
+                    <mat-icon>settings</mat-icon>
+                    <span>Settings</span>
+                  </button>
+                  <button mat-menu-item (click)="logout()">
+                    <mat-icon>power_settings_new</mat-icon>
+                    <span>Logout</span>
+                  </button>
+              </mat-menu>
+          </div>
+      </div>
+      <!-- <div class="sidenav__panel-menu">
+        <mat-list role="list" *ngFor="let nav of navs">
+          <mat-list-item class="menu__item menu__item--{{nav.nav_name}}"  routerLinkActive
+            #rla="routerLinkActive"  *ngIf="nav.view === 1" [routerLinkActive]="active_class" (click)="navSelection(nav)" class="sidenav-list"  role="listitem">
+              {{nav.nav_name}}         
+          </mat-list-item>
+        </mat-list>
+      </div> -->
+    </mat-drawer>
+    <mat-drawer-content>
+      <div id="main" class="page__content">
+        <div fxLayout="row" class="page__topnav">
+          <div class="top-avatar__wrapper">                
+              <div *ngIf="!drawer.opened" class="top-avatar">
+                  <img src="../assets/images/app/single-logo.png" alt="single logo" class="top-avatar__img" (click)="drawer.toggle()">
+              </div>
+            <button *ngIf="drawer.opened" class="toggle__btn" mat-icon-button (click)="drawer.toggle()">
+                  <mat-icon>menu</mat-icon>
+            </button>
+          </div>
+          <span fxFlex></span>
+          <div class="page__topnav--right">
+              <div>
+                    <span class="page__time">{{timeNow}}</span>  
+                    <span class="page__date">{{dateNow}}</span>  
+              </div>
+              <div>
+                <div>Welcome, {{account.prof_name}}</div>
+              </div>
+          </div>
+          <div class="clearfix"></div>
+        </div><!-- .page__topnav -->
+        <router-outlet *ngIf="isLoggedIn"></router-outlet>
+        <footer class="footer">
+          <p class="footer__copyright">&copy; Copryight 2022. <span class="fw-semibold">SPA Alhambra</span>. All Rights
+            Reserved.</p>
+          <p class="footer__developed">Developed by: <span class="fw-semibold">IOFORTECH</span></p>
+        </footer><!-- .footer -->
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <div *ngSwitchDefault>
+    <app-login *ngIf="isLoggedIn === false" (loggedResult)="parentEventHandlerFunction($event)"></app-login>
+  </div>
+</div>

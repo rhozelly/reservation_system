@@ -1,0 +1,75 @@
+<div class="page__header">
+  <h2 class="page__title"><i class="fas fa-calendar-alt"></i> Rooms</h2>
+  <span class="breadcrumbs"><i class="fas fa-calendar-alt"></i> Rooms >
+    <span class="current-page">View Rooms</span>
+  </span>
+</div><!-- .page__header -->
+
+  <div class="page__body"><!-- .page__body -->
+    <div class="room-page__header" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="room-page__search">
+        <mat-form-field fxFlex appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput [(ngModel)]="searchData" (ngModelChange)="searchbar()">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div><!-- .room-page__search -->
+      <div class="room-page__btn">
+        <button class="btn__default btn__add"  *ngIf="privsArray.add === 1"  mat-flat-button (click)="addRoom()">
+          <mat-icon>add</mat-icon>
+          Add Room
+        </button>
+      </div><!-- .room-page__btn -->
+    </div><!-- .room-page__header -->
+
+    <div class="table">
+      <div class="table__wrapper">
+        <table class="table-list" mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="room_name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element" class="capitalize"> {{element.room_name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="room_cat">
+            <th mat-header-cell *matHeaderCellDef> Service Name </th>
+            <td mat-cell *matCellDef="let element" class="capitalize"> {{element.room_cat}} </td>
+          </ng-container>
+          <ng-container matColumnDef="room_status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="status__wrapper" [ngClass]="{'green-status' : element.room_status === 1,
+                      'red-status' :  element.room_status === '0'}">
+                  <span class="status-badge">{{element.room_status === 1 ? 'available' : 'not available'}}</span>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="room_pax">
+            <th mat-header-cell *matHeaderCellDef> Pax </th>
+            <td mat-cell *matCellDef="let element"> {{element.room_pax}} </td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button class="btn-icon__default btn-icon__edit" *ngIf="privsArray.update === 1" mat-icon-button (click)="editRoom(element.room_id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="btn-icon__default btn-icon__delete" *ngIf="privsArray.delete === 1"  mat-icon-button (click)="alertMessage(element)">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div class="no-result__wrapper" *ngIf="rooms?.length === 0">
+          <span class="no-result">No results found</span>
+        </div>
+      </div>
+      <mat-paginator
+          [length]="pageLength"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="handlePageEvent($event)">
+      </mat-paginator>
+    </div>
+
+</div>

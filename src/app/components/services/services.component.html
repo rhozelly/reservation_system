@@ -1,0 +1,85 @@
+<div class="page__header">
+    <h2 class="page__title"><span class="subheader-icon--service"></span> Services</h2>
+    <span class="breadcrumbs"><span class="subheader-icon--service"></span> Services >
+        <span class="current-page">View Services</span>
+    </span>
+  </div><!-- .page__header -->
+  <div class="page__body">
+    <div class="service-page__header" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div class="service-page__search">
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput  [(ngModel)]="searchData" (ngModelChange)="searchbar()">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div><!-- .service-page__search -->
+        <div class="service-page__btn">
+          <button class="btn__default btn__add" mat-flat-button *ngIf="privsArray.add === 1" (click)="addService()">
+            <mat-icon>add</mat-icon>
+            Add Service
+          </button>
+        </div><!-- .service-page__btn -->
+      </div><!-- .service-page__header -->
+
+
+    <div class="table">
+      <div class="table__wrapper">
+        <table class="table-list" mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="service_id" hidden>
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.service_id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="service_code">
+            <th mat-header-cell *matHeaderCellDef> Service Code </th>
+            <td mat-cell *matCellDef="let element"> {{element.service_code}} </td>
+          </ng-container>
+          <ng-container matColumnDef="item_code">
+            <th mat-header-cell *matHeaderCellDef> Item Code </th>
+            <td mat-cell *matCellDef="let element"> {{element.item_code}} </td>
+          </ng-container>
+            <ng-container matColumnDef="service_name">
+              <th mat-header-cell *matHeaderCellDef> Service Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.service_name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="service_dur">
+                <th mat-header-cell *matHeaderCellDef> Duration </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.service_dur}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="service_group">
+                <th mat-header-cell *matHeaderCellDef> Group </th>
+                <td mat-cell *matCellDef="let element"> {{element.service_group_name}} </td>
+             </ng-container>
+             <ng-container matColumnDef="service_price">
+                 <th mat-header-cell *matHeaderCellDef> Price </th>
+                 <td mat-cell *matCellDef="let element"> {{element.service_price | currency : "PHP" : "symbol"}} </td>
+              </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let element">
+                <button class="btn-icon__default btn-icon__edit" mat-icon-button *ngIf="privsArray.update === 1"  (click)="editService(element.service_id)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button class="btn-icon__default btn-icon__delete" mat-icon-button *ngIf="privsArray.delete === 1"  (click)="alertMessage(element)">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <div class="no-result__wrapper" *ngIf="services?.length === 0">
+            <span class="no-result">No results found</span>
+          </div>
+        </div>
+          <mat-paginator
+          [length]="pageLength"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="handlePageEvent($event)">
+        </mat-paginator>
+    </div>
+
+
+    </div><!-- .page__body -->

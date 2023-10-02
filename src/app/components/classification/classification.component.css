@@ -1,0 +1,24 @@
+.disc__col{
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+}
+.disc__col form {
+    padding: 0 14px;
+    height: 470px;
+    overflow-y: auto;
+}
+.table-list tr.mat-header-row {
+    height: 40px;
+}
+.table-list .mat-subheader {
+    font-size: 20px;
+}
+.table-list .mat-cell {
+    padding: 10px !important;
+    align-items: center !important;
+}
+
+.disc-form {
+    width: 25%;
+    margin-right: 15px;
+}

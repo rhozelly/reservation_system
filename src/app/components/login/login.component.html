@@ -1,0 +1,24 @@
+<div class="login" >
+  <div class="login__wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <div class="form__wrapper" fxLayout="column">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <div class="login-logo__wrapper">
+          <img class="login-logo" src="assets/images/app/logo.png" alt="logo">
+        </div>
+        <form [formGroup]="loginForm" fxLayoutGap="15px" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+            <mat-form-field color="primary" appearance="fill" floatLabel="always" fxFlex>
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="uname" placeholder="Enter Username">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+            <mat-form-field color="primary" appearance="fill" floatLabel="always" fxFlex>
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="pass" type="password" placeholder="Enter Password">
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            <button mat-flat-button class="login-button" fxFlex (click)="login()">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

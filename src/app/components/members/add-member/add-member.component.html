@@ -1,0 +1,38 @@
+<div class="page__header">
+  <h2 class="page__title"><i class="fas fa-users"></i> 
+      <button mat-icon-button (click)="backMember()">
+          <mat-icon>chevron_left</mat-icon>
+      </button> {{actionUrl}} Therapist
+  </h2>
+  <span class="breadcrumbs"><i class="fas fa-users"></i> View Therapist >
+      <span class="current-page">{{actionUrl}} Therapist</span>
+  </span>
+</div><!-- .page__header -->
+<div class="page__body" fxLayout="row" fxLayoutGap="5px">
+    <div class="members-add__wrapper">        
+        <div mat-subheader>{{actionUrl}} New Member</div>  
+        <div fxLayout="row">    
+            <form [formGroup]="addMemberForm" fxLayout="column" fxLayoutGap="15px" fxFlex>
+                <!-- <mat-form-field appearance="fill" floatLabel="always" >
+                    <mat-label>Select A Branch</mat-label>
+                    <mat-select formControlName="branch_id">
+                        <mat-option [value]="branch.branch_id" *ngFor="let branch of branches">{{branch.branch_name}}, {{branch.branch_address}}</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Member's Name</mat-label>
+                    <input formControlName="mem_name" type="text" matInput>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="mem_status">
+                        <mat-option [value]="ms" *ngFor="let ms of memberStatus">{{ms}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="end end" fxFlex="25">
+                    <button mat-raised-button class="btn__default btn__add" fxFlex="25" (click)="submit()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

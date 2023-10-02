@@ -1,0 +1,73 @@
+.dashboard__content {    
+    padding: 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.dashboard__column {    
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    /* width: 100%; */
+    position: relative;    
+    /* height: 100%;     */
+    height: 150px;     
+    width: 31%;   
+    box-shadow: 0 2px 3px -1px rgb(0 0 0 / 20%);
+}
+.dashboard__title {
+    font-size: 15px;    
+    font-weight: 600;
+    margin-bottom: -3px;
+    margin-top: 15px;
+}
+.dashboard__title:nth-child(1) {
+    margin-bottom: 7px;
+}
+.dashboard__sub-title {
+    padding: 12px 0;
+    font-size: 32px;
+    font-weight: 500;
+}
+.dashboard__lists{
+    height: 250px;
+    overflow-y: scroll;
+}
+.dashboard__list {
+    padding: 4px 0;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-family: 'Poppins';
+}
+.dashboard__numbers {
+    font-size: 33px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+.dashboard-right__header {
+    padding: 22px 40px 23px;
+    /* padding: 40px 40px 23px 40px; */
+    background: white;
+    border-radius: 10px 10px 0 0;
+    background: #FBDC70;
+    box-shadow: 0 2px 3px -1px rgb(0 0 0 / 20%);
+}
+.dashboard-right__content {
+    padding: 40px;
+    background: white;
+    border-radius: 0 0 10px 10px;
+    height: 100%;
+    /* overflow-y: auto; */
+    box-shadow: 0 2px 3px -1px rgb(0 0 0 / 20%);
+    max-height: 328px;
+}
+.b-booking   {  border-left: 16px solid #3E2D2E;  }
+.b-therapist {  border-left: 16px solid #A7696A;  }
+.b-rooms     {  border-left: 16px solid #C4AB96;  }
+
+
+.icon-booking   {  color: #3E2D2E; position: absolute; top: 14px; font-size: 60px; right: 50px; display: block; }
+.icon-therapist {  color: #A7696A; position: absolute; top: 14px; font-size: 60px; right: 50px; display: block; }
+.icon-rooms     {  color: #C4AB96; position: absolute; top: 14px; font-size: 60px; right: 50px; display: block; }
+

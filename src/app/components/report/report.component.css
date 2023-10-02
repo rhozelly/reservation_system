@@ -1,0 +1,85 @@
+.report__body { 
+    overflow: auto;
+}
+.reports__wrapper {
+    margin: 0 auto;
+    width: 100%;
+    font-size: 12px;
+}
+.reports__header{
+    font-weight: 600;
+}
+.reports-logo__wrapper {    
+    width: 70px;
+    text-align: center;
+    margin: 0 auto;
+}
+.reports-logo {
+    margin: 12px 0;
+}
+.reports__table-header {
+    text-transform: uppercase;
+    font-weight: 800;
+    background: #dbdbdb;
+    margin: 0 10px;
+    padding: 5px 10px;
+    color-adjust: exact; 
+    -webkit-print-color-adjust: exact;
+}
+.reports__table-content{    
+    padding: 0 10px;
+}
+.reports__table-content-list {
+    padding: 5px 0px;
+    border-bottom: 1.5px solid whitesmoke;
+}
+.reports__table-content-list:nth-of-type(even) {
+    background: whitesmoke;
+    color-adjust: exact; 
+    -webkit-print-color-adjust: exact;
+}
+.btn__report {    
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    height: 50px;
+    width: 100px;
+}
+.reports__header {
+    margin: 0 auto;
+    text-align: center;
+}
+.reports__title {
+    font-size: 20px;
+    font-weight: 600;
+}
+.reports__sub-title {
+    font-size: 16px;
+    margin: 9px 0px;
+    font-weight: 500;
+}
+.text-center{
+    text-align: center;
+}
+.excel-table__header {
+    background-color: #002060;
+    color: white;
+}
+.btn__pdf {
+    background: #ac4136;
+    color: white;
+}
+.btn__excel {
+    background: #00864e;
+    color: white;
+}
+
+.report-radio__section {
+    padding: 0px 0px 10px 1px;
+}
+.report-radio__section mat-radio-button {
+    margin-right: 10px;
+    text-transform: uppercase;
+    background: whitesmoke;
+    padding: 6px 22px;
+    border-radius: 5px;
+}

@@ -1,0 +1,59 @@
+
+<div *ngIf="spinner"  class="spinner__wrapper-components">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="page__header">
+  <h2 class="page__title"><i class="fas fa-users"></i> Availability </h2>
+  <span class="breadcrumbs">Availability > <span class="current-page">View Availability</span></span>
+</div><!-- .page__header -->
+
+<div fxLayout="row wrap" class="page__subheader--wrapper">
+  <span class="page__subheader"><span class="color-black">Therapist</span> & <span class="color-black">Room's</span> Available Today</span>
+  <span fxFlex></span>
+  <div>
+    <button mat-flat-button class="btn__default btn__add" (click)="resetAll()">Reset All</button>
+  </div>
+</div><!-- .page__subheader -->
+
+<div fxLayout="row" fxLayoutGap="15px" class="page__body--avail">
+  <div fxLayout="column" class="page__body--column therapist-list__column">
+    <div fxLayout="row">
+      <div fxLayout="column" fxFlex cdkDropList (cdkDropListDropped)="drop($event)">
+        <div class="drag-lists" *ngFor="let av of avail" cdkDragLockAxis="y" cdkDrag>
+          <span>{{av.avail_mem_order}}.</span>
+          {{av.mem_name}} ({{av.service_total || 0}})
+        </div>
+          
+        <div class="no-result__wrapper" *ngIf="avail?.length === 0">
+            <span class="no-result">No results found</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- TODO:: In selecting room, display of details -->
+  <div fxLayout="column" fxFlex class="page__body--column">    
+    <div fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="start stretch">
+      <mat-card class="card" *ngFor="let room of rooms">
+          <mat-card-title class="card__name">{{room.room_name}}
+            <span class="card__cat card__cat--{{room.room_cat}}">{{room.room_cat}}</span>
+          </mat-card-title>        
+          <mat-divider inset></mat-divider>    
+          <mat-card-actions fxLayout="row wrap" fxLayoutAlign="end end">
+            <div matTooltip="{{room.book_guest_name}} {{room.book_guest_name ? ',' : 'available'}} {{room.service_name}}"
+              *ngFor="let pax of room.pax_array; let i = index"
+              [ngClass]="{'bed_green' : pax.bed_status[i] === '1', 'bed__red' : pax.bed_status[i] === '0'}">
+              <img *ngIf="pax.bed_status[i] === '0'" src="../../../assets/images/grey-bed.png" alt="beds">
+              <img *ngIf="pax.bed_status[i] === '1'" src="../../../assets/images/green-bed.png" alt="beds">
+            </div>
+              <!-- <button mat-button fxLayout="row" fxLayoutAlign="center center" fxFlex class="card__buttons"  matTooltip="{{room.book_guest_name}} {{room.book_guest_name ? ',' : 'available'}} {{room.service_name}}"
+                *ngFor="let pax of room.pax_array; let i = index"
+               [ngClass]="{'bed_green' : pax.bed_status[i] === '1', 'bed__red' : pax.bed_status[i] === '0'}">
+                  <fa-icon class="bed-icon" *ngIf="pax.bed_status[i] === '0'" [icon]="faBedEmpty"></fa-icon>
+                  <object class="bed-icon" *ngIf="pax.bed_status[i] === '1'" data="../../../assets//images/app/bed-empty-green.svg" width="17.5" height="14"></object>
+              </button> -->
+          </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div><!-- .page__body -->

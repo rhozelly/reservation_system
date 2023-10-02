@@ -1,0 +1,59 @@
+<div class="page__header">
+  <h2 class="page__title"><i class="fas fa-calendar-alt"></i>
+    <button mat-icon-button (click)="back()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    {{actionUrl}} Room
+  </h2>
+  <span class="breadcrumbs"><i class="fas fa-calendar-alt"></i> View Room >
+        <span class="current-page">{{actionUrl}} Room</span>
+    </span>
+</div>
+
+<div class="page__body" fxLayout="row" fxLayoutGap="5px">
+  <div class="rooms-add__wrapper">
+    <div mat-subheader>{{actionUrl}} New Room</div>  
+    <div fxLayout="row">
+        <form [formGroup]="roomForm" fxLayout="column" fxLayoutGap="15px" fxFlex>
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Room Name</mat-label>
+                <input matInput type="text" formControlName="room_name">
+            </mat-form-field>
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Number of Bed(s)</mat-label>
+                <input matInput  type="number" maxlength="2" formControlName="room_pax">
+            </mat-form-field>
+            <!-- <mat-form-field appearance="fill" floatLabel="always">
+              <mat-label>Branch</mat-label>
+                <mat-select formControlName="branch_id">
+                    <mat-option *ngFor="let b of branches" [value]="b.branch_id">
+                      {{b.branch_name}} ({{b.branch_address}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+            <mat-form-field appearance="fill" floatLabel="always">
+              <mat-label>Categories</mat-label>
+                <mat-select formControlName="room_cat">
+                    <mat-option *ngFor="let c of roomCategories" [value]="c">{{c}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" floatLabel="always">
+              <mat-label>Status</mat-label>
+                <mat-select formControlName="room_status">
+                    <mat-option value="1">Available</mat-option>
+                    <mat-option value="0">Not Available</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign="end end">
+                  <button mat-flat-button class="btn__default btn__add" (click)="submit()" fxFlex="25">Save</button>
+            </div>
+        </form>
+    </div>
+  </div>
+  <!-- <div class="rooms-add__wrapper">
+    <div class="image__wrapper">
+        <img class="image" src="../../../../assets/images/room-form.jpg" alt="room">
+    </div>
+  </div> -->
+</div>
+

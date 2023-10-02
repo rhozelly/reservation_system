@@ -1,0 +1,13 @@
+<div class="dialog__content">
+  <!-- <h1 mat-dialog-title>Alert Message</h1> -->
+  <div class="warning-icon__wrapper">
+    <i class="fas fa-exclamation-triangle warning-icon"></i>
+  </div>
+  <div mat-dialog-content  class="warning__content" fxLayout="row" fxLayoutAlign="center center">
+    <p>{{data.message}}</p>
+  </div>
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-flat-button fxFlex [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+    <button mat-raised-button fxFlex class="warn-panel" (click)="remove()">YES</button>
+  </div>
+</div>

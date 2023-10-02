@@ -1,0 +1,65 @@
+.calendar-card {
+  width: 350px;
+}
+.left-col__book-form {
+  margin-top: 23px;
+}
+.booking__wrapper{
+  padding: 24px;
+}
+.update-booking__title{  
+  font-family: Poppins !important;
+  text-transform: uppercase;
+  font-weight: 300 !important;
+  margin-bottom: 1px!important;
+}
+.update-booking__subtitle {
+  text-transform: uppercase;
+  margin: 15px 0 3px;
+  color: #2b2b2b;
+}
+.update-booking__wrapper mat-form-field {
+  margin-bottom: -10px;
+}
+.update-booking__left{
+  padding: 24px;
+}
+.update-booking__right {
+  padding: 24px;
+  background: #0D413F;
+  /* color: white; */
+}
+.update-booking__right .update-booking__subtitle{
+  color: white;
+  margin: 9px 0 3px;
+}
+.update-booking__total {
+  padding: 25px 0;
+  font-size: 29px;
+  color: white;
+}
+.booking-payment-table {
+  width: 100%;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+}
+
+.booking-payment-table .header{
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+.booking-payment-table .content {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.restriction-therapist {
+  font-family: 'Poppins';
+  text-transform: uppercase;
+  font-weight: 200;
+  font-size: 12px;
+  color: #2b2b2b;
+}

@@ -1,0 +1,14 @@
+.dialog__content{
+    padding: 24px;
+    text-align: center;
+}
+.warning-icon{    
+    color: #AC4136;
+    font-size: 29px;
+}
+.warning-icon__wrapper {
+    padding: 12px 0;
+}
+.warning__content {
+    margin-bottom: 10px;
+}

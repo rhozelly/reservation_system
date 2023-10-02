@@ -1,0 +1,21 @@
+.settings__tab-content {
+    padding: 10px 20px;
+}
+.settings__subheader {    
+    margin-left: -15px;
+    font-weight: 500;
+}
+.settings_priv-lists {
+    padding: 8px;
+    border-top: 1px solid #dbdbdb;
+    font-family: 'Poppins' !important;
+}
+.spinner__wrapper {
+   position: absolute;
+   left: 45%;
+   top: 35%;
+   z-index: 10;
+}
+.setting_wrapper{
+    padding: 24px;
+}

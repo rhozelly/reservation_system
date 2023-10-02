@@ -1,0 +1,212 @@
+<div class="setting_wrapper">
+
+  <h1 mat-dialog-title>Settings
+    <span fxFlex></span>
+    <button mat-icon-button [mat-dialog-close]="'close'" ><mat-icon>clear</mat-icon></button>
+  </h1>
+  <div mat-dialog-content>
+    <mat-tab-group>
+      <mat-tab label="Account List">
+        <div fxLayout="row" fxLayoutGap="15px" class="settings__tab-content">
+          <div fxLayout="column" fxFlex="30">
+            <div mat-subheader class="settings__subheader">Account Form</div>
+              <form [formGroup]="accountForm"  fxLayout="column">
+                <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Name</mat-label>
+                  <input matInput type="text" formControlName="prof_name">
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Username</mat-label>
+                  <input matInput type="text" formControlName="acc_uname">
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Role</mat-label>
+                  <mat-select formControlName="priv_id">
+                    <mat-option *ngFor="let role of roles" [value]="role.priv_id">
+                      {{role.priv_label}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Branch</mat-label>
+                  <mat-select formControlName="branch_id">
+                    <mat-option *ngFor="let b of branches" [value]="b.branch_id">
+                      {{b.branch_name}} ({{b.branch_address}})
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field *ngIf="!patchedAccount" fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Password</mat-label>
+                  <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="acc_pass">
+                  <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                </mat-form-field>
+                <mat-form-field *ngIf="this.accountForm.get('acc_pass')?.value.length > 0" fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Match Password</mat-label>
+                  <input matInput [type]="hideMatchPassword ? 'password' : 'text'" [(ngModel)]="matchpassword" [ngModelOptions]="{standalone: true}" (ngModelChange)="checkMatchPassword()">
+                  <button mat-icon-button matSuffix (click)="hideMatchPassword = !hideMatchPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideMatchPassword">
+                    <mat-icon>{{hideMatchPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-hint align="end">{{passwordHintMessage}}</mat-hint>
+                </mat-form-field>
+                
+                <div mat-subheader *ngIf="patchedAccount" class="settings__subheader">Change Password</div>
+  
+                <mat-form-field *ngIf="patchedAccount" fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>New Password</mat-label>
+                  <input matInput [type]="hideMatchPassword ? 'password' : 'text'" [(ngModel)]="newPassword" [ngModelOptions]="{standalone: true}">
+                  <button mat-icon-button matSuffix (click)="hideMatchPassword = !hideMatchPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideMatchPassword">
+                    <mat-icon>{{hideMatchPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                </mat-form-field>
+  
+                <mat-form-field *ngIf="patchedAccount" fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Match New Password</mat-label>
+                  <input matInput [type]="hideMatchPassword ? 'password' : 'text'" [(ngModel)]="newPasswordMatch" [ngModelOptions]="{standalone: true}" (ngModelChange)="checkNewMatchPassword()">
+                  <button mat-icon-button matSuffix (click)="hideMatchPassword = !hideMatchPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideMatchPassword">
+                    <mat-icon>{{hideMatchPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-hint align="end">{{passwordHintMessage}}</mat-hint>
+                </mat-form-field>
+              </form>
+          </div>
+          <div fxLayout="column" fxFlex fxLayoutAlign="space-between">
+            <div mat-subheader fxLayoutAlign="start start" class="settings__subheader">Account Lists</div>
+              <table class="table-list" mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="prof_name" hidden>
+                  <th mat-header-cell *matHeaderCellDef> Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.prof_name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="acc_uname">
+                  <th mat-header-cell *matHeaderCellDef> Username </th>
+                  <td mat-cell *matCellDef="let element"> {{element.acc_uname}} </td>
+                </ng-container>
+                <ng-container matColumnDef="branch_name">
+                  <th mat-header-cell *matHeaderCellDef> Branch </th>
+                  <td mat-cell *matCellDef="let element"> {{element.branch_name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button class="btn-icon__default btn-icon__edit" mat-icon-button (click)="patchValues(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button class="btn-icon__default btn-icon__delete" mat-icon-button (click)="alertMessage('accounts',element)">
+                      <mat-icon>delete_outline</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              <div class="no-result__wrapper" *ngIf="accounts?.length === 0">
+                  <span class="no-result">No results found</span>
+              </div>
+             <mat-paginator [length]="accountPageLength" [pageSize]="accountPageSize" [pageSizeOptions]="accountpageSizeOptions" (page)="handlePageEvent($event)"></mat-paginator>
+             <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end end">
+                  <button fxFlex="30" *ngIf="!patchedAccount" mat-button class="btn__add"  (click)="submit('accounts')">Save</button>
+                  <button fxFlex="30" *ngIf="patchedAccount" mat-button (click)="resetForms('accounts')">Reset</button>
+                  <button fxFlex="30" *ngIf="patchedAccount" mat-button class="btn__add" (click)="update('accounts')">Update</button>
+             </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Branches">
+        <div fxLayout="row" fxLayoutGap="15px" class="settings__tab-content">
+          <div fxLayout="column" fxFlex="30">
+            <div mat-subheader class="settings__subheader">Branch Form</div>
+            <form fxLayout="column" [formGroup]="branchForm">
+              <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                <mat-label>Branch Name</mat-label>
+                <input matInput type="text" formControlName="branch_name">
+              </mat-form-field>
+              <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                <mat-label>Branch Address</mat-label>
+                <input matInput type="text" formControlName="branch_address">
+              </mat-form-field>
+              <div fxLayout="row">
+                <button *ngIf="!patchedBranch" mat-button class="btn__add" (click)="submit('branches')">Save</button>
+                <button *ngIf="patchedBranch" mat-button (click)="resetForms('branches')">Reset</button>
+                <button *ngIf="patchedBranch" mat-button class="btn__add" (click)="update('branches')">Update</button>
+              </div>
+            </form>
+          </div>
+          <div fxLayout="column" fxFlex>
+            <div mat-subheader class="settings__subheader">Branches Lists</div>
+            <table class="table-list" mat-table [dataSource]="branchSource">
+              <ng-container matColumnDef="branch_name" hidden>
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.branch_name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="branch_address">
+                <th mat-header-cell *matHeaderCellDef> Username </th>
+                <td mat-cell *matCellDef="let element"> {{element.branch_address}} </td>
+              </ng-container>
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn-icon__default btn-icon__edit" mat-icon-button (click)="patchBranchValues(element)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button class="btn-icon__default btn-icon__delete" mat-icon-button (click)="alertMessage('branches',element)">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="branchColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: branchColumns;"></tr>
+            </table>          
+            <div class="no-result__wrapper" *ngIf="branches?.length === 0">
+              <span class="no-result">No results found</span>
+          </div>
+            <mat-paginator [length]="branchPageLength"></mat-paginator>
+          </div>
+        </div>
+  
+      </mat-tab>
+      <mat-tab label="Privileges">
+  
+        <div fxLayout="row" fxLayoutGap="15px" class="settings__tab-content">
+          <div fxLayout="column">
+              <div mat-subheader class="settings__subheader">Account List</div>
+              <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Accounts</mat-label>
+                <mat-select [(ngModel)]="selectedAccId" (ngModelChange)="selectedAccount()">
+                  <mat-option *ngFor="let account of accounts" [value]="account.acc_id">
+                  {{account.prof_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex>
+            <div *ngIf="spinner" class="spinner__wrapper">
+              <mat-spinner></mat-spinner>
+            </div>
+              <div fxFlex class="settings_priv-lists">
+                <span fxFlex="20"></span>
+                <span fxFlex="10" fxLayoutAlign="center center">View</span> 
+                <span fxFlex="10" fxLayoutAlign="center center">Add</span>
+                <span fxFlex="10" fxLayoutAlign="center center">Update</span>  
+                <span fxFlex="10" fxLayoutAlign="center center">Delete</span> 
+              </div>
+              <div fxFlex class="settings_priv-lists" fxLayout="row" *ngFor="let pri of privs; let i = index">
+                <span fxFlex="20">{{pri.sett_url}}</span>
+                <mat-checkbox fxFlex="10" fxLayoutAlign="center center" [(ngModel)]="pri.view" [checked]="pri.view"></mat-checkbox> 
+                <mat-checkbox fxFlex="10" fxLayoutAlign="center center" [(ngModel)]="pri.add" [checked]="pri.add"></mat-checkbox> 
+                <mat-checkbox fxFlex="10" fxLayoutAlign="center center" [(ngModel)]="pri.update" [checked]="pri.update"></mat-checkbox> 
+                <mat-checkbox fxFlex="10" fxLayoutAlign="center center" [(ngModel)]="pri.delete" [checked]="pri.delete"></mat-checkbox> 
+              </div>    
+              <div fxLayout="row" fxLayoutAlign="end end">
+                  <button fxFlex="30" mat-button class="btn__add" (click)="savePrivs()" [disabled]="savePrivilegesButton">Save Privileges</button>
+              </div>  
+          </div>
+        </div>      
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div mat-dialog-actions>    
+  </div>
+  
+</div>

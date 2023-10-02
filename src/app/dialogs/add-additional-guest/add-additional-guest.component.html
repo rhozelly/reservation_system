@@ -1,0 +1,113 @@
+<div class="additional-dialog__wrapper">
+    <h1 mat-dialog-title>
+        Additional Booking Form
+        <span fxFlex></span>
+        <button mat-icon-button matDialogClose="close"><mat-icon>clear</mat-icon></button>
+    </h1>
+    <div mat-dialog-content>
+      <!-- Forms -->
+      <div fxLayout="row wrap" fxLayoutGap="25px">      
+        <form fxLayout="column" fxFlex [formGroup]="additionalBookForm">  
+            <div mat-subheader>Guest Information</div>    
+            <div fxLayout="row" fxFlex fxLayoutGap="5px">
+                <mat-form-field fxFlex *ngIf="this.userRole === 'super-admin'" appearance="fill" floatLabel="always">
+                  <mat-label>Select A Branch</mat-label>
+                  <mat-select book_guest_name>
+                    <mat-option [value]="branch.branch_id" ngM *ngFor="let branch of branches">{{branch.branch_name}}, {{branch.branch_address}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxFlex fxLayoutGap="5px">
+                <mat-form-field appearance="fill">
+                    <mat-label>Pick a Client</mat-label>
+                    <input type="text" 
+                           matInput #clientInput
+                           formControlName="book_pax_selection"
+                           required
+                           [matAutocomplete]="autoClient">
+                    <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayGuestName">
+                      <mat-option *ngFor="let clients of autocompleteClients | async" [value]="clients">
+                        {{clients.book_guest_name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <span matPrefix><mat-icon>sensor_occupied</mat-icon></span>
+                </mat-form-field>  
+                <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label> Time Start </mat-label>
+                  <mat-select formControlName="time_start" [disabled]="times.length <= 0">
+                    <mat-option [value]="time.val_name" *ngFor="let time of times" [disabled]="time.val_status">{{time.val_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Choose a date</mat-label >
+                  <input matInput formControlName="booked_date" [matDatepicker]="picker" [disabled]="true">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>     
+            <div fxLayout="row" fxLayoutGap="5px">
+                <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Guest Name</mat-label>
+                  <input matInput type="text" formControlName="book_guest_name">
+                  <span matPrefix><mat-icon>person</mat-icon></span>
+                </mat-form-field>      
+                <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Contact #</mat-label>
+                  <input matInput type="text" #inputContact maxlength="11"  formControlName="book_guest_number">
+                  <mat-hint align="end">{{inputContact.value?.length || 0}}/11</mat-hint>
+                  <span matPrefix><mat-icon>phone</mat-icon></span>
+                </mat-form-field> 
+            </div>
+            <div mat-subheader >Services Information</div>
+            <div fxLayout="row">
+                <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Services Selection</mat-label>
+                  <mat-chip-list #chipList aria-label="Services Selection" required>
+                    <mat-chip
+                      *ngFor="let autoServices of autocompleteService"
+                      (removed)="remove(autoServices)">
+                      {{autoServices.service_name}}
+                      <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </mat-chip>
+                    <input
+                      placeholder="Services Description..."
+                      #serviceInput
+                      [formControl]="serviceControl"
+                      [matAutocomplete]="auto"
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      (matChipInputTokenEnd)="add($event)">
+                  </mat-chip-list>
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let ser of autocompleteServices | async" [value]="ser">
+                      {{ser.service_name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="5px">  
+                <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Rooms</mat-label>
+                  <mat-select formControlName="room_id">
+                    <mat-option [value]="''">None</mat-option>
+                    <mat-option [value]="room.room_id" *ngFor="let room of rooms">{{room.room_name}} ({{room.room_cat}})</mat-option>
+                  </mat-select>
+                </mat-form-field> 
+                <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                  <mat-label>Therapist</mat-label>
+                  <mat-select formControlName="mem_id" [disabled]="members.length <= 0" required>
+                    <mat-option [value]="''">None</mat-option>
+                    <mat-option [value]="mem.mem_id" *ngFor="let mem of members">{{mem.mem_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field> 
+            </div>
+          </form>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button mat-flat-button [mat-dialog-close]="'close'">Cancel</button>
+      <button mat-button class="btn__default btn__add btn__w-250" cdkFocusInitial (click)="arrived()" > Add Guest Booking</button>
+    </div>
+  </div>

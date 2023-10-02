@@ -1,0 +1,12 @@
+.service-page__search {
+    width: 40%;
+}
+.service-page__header {    
+    margin-top: -18px;
+}
+/* Sub header Icons */
+::ng-deep .subheader-icon--service::before {    
+    content: "\e05c";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 800;
+}

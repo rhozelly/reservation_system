@@ -1,0 +1,55 @@
+<div class="account-dialog__wrapper">
+    <h1 mat-dialog-title>Account Profile
+        <span fxFlex></span>
+        <button mat-icon-button [mat-dialog-close]="'close'"><mat-icon>clear</mat-icon></button>
+    </h1>
+    <div fxLayout="column" mat-dialog-content>
+        <form [formGroup]="profileForm" fxLayout="column">
+            <div mat-subheader>Your Profile Information</div>    
+            <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                <mat-label>Profile Name</mat-label>
+                <input matInput type="text" formControlName="prof_name">
+            </mat-form-field>
+            
+            <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                <mat-label>Contact Number</mat-label>
+                <input matInput type="number" formControlName="prof_num">
+            </mat-form-field>
+            
+            <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                <mat-label>Address</mat-label>
+                <input matInput type="textarea" formControlName="prof_address">
+            </mat-form-field>  
+        </form>
+
+        
+        <form [formGroup]="accountForm"  fxLayout="column">
+            <div mat-subheader>Your Credentials</div>    
+            <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" formControlName="acc_uname">
+            </mat-form-field>
+            
+            <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                <mat-label>Change Password</mat-label>
+                <input matInput [type]="hideChangePass ? 'password' : 'text'" formControlName="acc_pass">
+                <button mat-icon-button matSuffix (click)="hideChangePass = !hideChangePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideChangePass">
+                  <mat-icon>{{hideChangePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            
+            <mat-form-field fxFlex appearance="fill" floatLabel="always">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput [type]="hideConfirmPass ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hideConfirmPass = !hideConfirmPass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPass">
+                  <mat-icon>{{hideConfirmPass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>  
+        </form>
+
+    
+    </div>
+    <div mat-dialog-actions align="end">
+        <button fxFlex="25" mat-button class="btn__add" (click)="submit()">Save</button>
+    </div>
+</div>

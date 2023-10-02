@@ -1,0 +1,144 @@
+<div class="page__header">
+    <h2 class="page__title"><i class="fas fa-users"></i> Reports</h2>
+    <span class="breadcrumbs">Reports > <span class="current-page">View All Reports</span></span>
+  </div><!-- .page__header -->
+  
+<div class="page__body report__body">
+    <div class="report-radio__section">
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="type">
+            <mat-radio-button class="example-radio-button" *ngFor="let type of types" [value]="type">
+                {{type}}
+            </mat-radio-button>
+        </mat-radio-group>          
+    </div>
+    <div fxLayout="column" class="report-page__header">
+        <div fxLayout="row wrap" fxLayoutGap="15px">
+            <div fxLayout="row">
+                <mat-form-field color="accent" appearance="fill" floatLabel="always">
+                    <mat-label>Select a Date Range</mat-label>
+                        <mat-date-range-input [formGroup]="range"  [rangePicker]="picker">
+                            <input matStartDate formControlName="start" placeholder="Start date">
+                            <input matEndDate formControlName="end" placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="15px" fxFlex>
+                <button mat-raised-button class="btn__report" (click)="search()">Search</button>
+                <button mat-raised-button class="btn__report" (click)="reset()">Reset</button>
+            </div>
+            <span fxFlex></span>
+            <div fxLayout="row wrap" fxLayoutGap="5px" fxFlex>
+                <button mat-raised-button class="btn__report btn__pdf" printSectionId="reportsID" [useExistingCss]="true" [disabled]="reports.length <= 0"
+                    styleSheetFile="../report.component.css" ngxPrint>Print PDF</button>                    
+                <button mat-raised-button class="btn__report btn__excel" (click)="exportexcel()" [disabled]="reports.length <= 0">Print xlsx</button>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxLayout="column" class="reports__wrapper" id="reportsID">
+                <div fxLayout="row" *ngIf="reports.length > 0">
+                    <div class="reports__header" fxLayout="column" >
+                        <div class="reports-logo__wrapper">
+                            <img class="reports-logo" src="../../../assets/images/app/logo.png" alt="logo">
+                        </div>
+                        <span class="reports__title">Daily Sales Reports</span>
+                        <span class="reports__sub-title">as of {{range.get('start')?.value | date:'MM/dd/YYYY'}} to  {{range.get('end')?.value | date:'MM/dd/YYYY'}} </span>
+                    </div>
+                </div>
+                <span class="no-result" *ngIf="reports.length <= 0">No result found.</span>
+                <div class="reports__table-header" fxLayout="row" *ngIf="reports.length > 0">
+                    <div fxFlex="10">Date</div>
+                    <div fxFlex="10">Item Code</div>
+                    <div fxFlex>Service</div>
+                    <div fxFlex>Duration</div>
+                    <div fxFlex>Gross Price</div>
+                    <div fxFlex>Discount</div>
+                    <div fxFlex>Net Price</div>
+                    <div fxFlex>Mode of Payment</div>
+                    <div fxFlex>Client Name</div>
+                    <div fxFlex>Start Time</div>
+                    <div fxFlex>End Time</div>
+                    <div fxFlex>Therapist Name</div>
+                </div>    
+                <div class="reports__table-content" fxLayout="column" *ngIf="reports.length > 0">          
+                    <div class="reports__table-content-list" fxLayout="row" *ngFor="let rep of reports[0]">
+                        <div fxFlex="10">{{rep.booked_date |  date:'MM/dd/YYYY'}}</div>
+                        <div fxFlex="10">{{rep.item_code}}</div>
+                        <div fxFlex>{{rep.service_name}}</div>
+                        <div fxFlex class="text-center">{{rep.service_dur}}</div>
+                        <div fxFlex>{{rep.price | currency : "PHP" : "symbol"}}</div>
+                        <div fxFlex>{{rep.disc_percent ? rep.disc_percent : '-'}} ({{rep.disc_name ? rep.disc_name : '-'}})</div>
+                        <div fxFlex>{{rep.total_price | currency : "PHP" : "symbol"}}</div>
+                        <div fxFlex>{{rep.mode_of_payment}}</div>
+                        <div fxFlex class="capitalize">{{rep.book_guest_name}}</div>
+                        <div fxFlex>{{rep.time_start}}</div>
+                        <div fxFlex>{{rep.time_end}}</div>
+                        <div fxFlex>{{rep.mem_name}}</div>
+                    </div>
+                    <div fxLayout="row" class="reports__table-content-list">
+                        <div fxFlex="10"> TOTAL SALES</div>
+                        <div fxFlex="10"></div>
+                        <div fxFlex></div>
+                        <div fxFlex></div>
+                        <div fxFlex>{{reports[1][0].gross | currency : "PHP" : "symbol"}}</div>
+                        <div fxFlex></div>
+                        <div fxFlex>{{reports[1][0].net | currency : "PHP" : "symbol"}}</div>
+                        <div fxFlex></div>
+                        <div fxFlex></div>
+                        <div fxFlex></div>
+                        <div fxFlex></div>
+                        <div fxFlex></div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Start Excel Table -->
+<div style="margin: auto; width: 50%; display: none;" *ngIf="reports.length > 0"> 
+    <table id="excel-table">
+      <tr class="excel-table__header" style=" background-color: #002060; color: white;">
+        <th>DATE</th>
+        <th>ITEM CODE</th>
+        <th>DESCRIPTION</th>
+        <th>UNIT</th>
+        <th>GROSS SALES</th>
+        <th>DISCOUNT</th>
+        <th>NET SALES</th>
+        <th>MODE OF PAYMENT</th>
+        <th>CLIENT'S NAME</th>
+        <th>START</th>
+        <th>END</th>
+        <th>THERAPIST</th>
+      </tr>
+      <tr *ngFor="let rep of reports[0]">
+        <td>{{rep.booked_date_excel}}</td>
+        <td>{{rep.item_code}}</td>
+        <td>{{rep.service_name}}</td>
+        <td>{{rep.service_dur}}</td>
+        <td>{{rep.price | currency : "PHP" : "symbol"}}</td>
+        <td>{{rep.disc_percent ? rep.disc_percent : '-'}} ({{rep.disc_name ? rep.disc_name : '-'}})</td>
+        <td>{{rep.total_price | currency : "PHP" : "symbol"}}</td>
+        <td>{{rep.mode_of_payment}}</td>
+        <td>{{rep.book_guest_name}}</td>
+        <td>{{rep.time_start}}</td>
+        <td>{{rep.time_end}}</td>
+        <td>{{rep.mem_name}}</td>
+      </tr>      
+      <tr>
+        <th>TOTAL SALES</th>
+        <th></th>
+        <th></th>
+        <th>{{reports[1][0].gross | currency : "PHP" : "symbol"}}</th>
+        <th></th>
+        <th>{{reports[1][0].net | currency : "PHP" : "symbol"}}</th>
+        <th></th>
+        <th></th>
+        <td></td>          
+        <td></td>          
+      </tr>
+    </table>
+</div>  
+<!-- End Excel Table -->

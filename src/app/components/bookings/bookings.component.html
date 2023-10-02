@@ -1,0 +1,203 @@
+<div class="page__header bookings__header">
+  <h2 class="page__title"><i class="fas fa-address-book"></i> Bookings</h2>
+  <span class="breadcrumbs"><i class="fas fa-address-book"></i> Bookings > <span class="current-page">View Bookings</span></span>
+</div>
+<div class="booking__timegrid">
+  <div fxLayout="row" class="bookings__legder" fxLayoutGap="10px">
+    <div class="dot__wrapper dot__pending-clr">
+      <span class="dot__color dot__pending"></span>
+      <span> Pending </span>
+    </div> 
+    <div class="dot__wrapper dot__arrived-clr">
+      <span class="dot__color dot__arrived"></span>  
+      <span> Arrived </span>
+    </div> 
+    <div class="dot__wrapper dot__completed-clr">
+      <span class="dot__color dot__completed"></span>  
+      <span> Completed</span>
+    </div> 
+    <div class="dot__wrapper dot__cancelled-clr">
+      <span class="dot__color dot__cancelled"></span>  
+      <span> Cancelled </span>
+    </div> 
+    <div class="dot__wrapper dot__no-show-clr">
+      <span class="dot__color dot__no-show"></span>  
+      <span> No Show </span>
+    </div> 
+    <div class="dot__wrapper dot__spa-party-clr">
+      <span class="dot__color dot__spa-party"></span>  
+      <span> Spa Party </span>
+    </div> 
+</div>
+  <mat-tab-group class="bookings-time-grid__wrapper" [color]="'accent'" animationDuration="0ms" #tabgroup [(selectedIndex)]="selectedIndex"  (selectedTabChange)="tabClick($event)">  
+    <mat-tab label="Time Grid">
+      <div fxLayout="column">
+        <div fxLayout="row wrap" class="bookings-time-grid__header" fxLayoutGap="15px">
+            <div fxLayout="row" fxFlex="35" fxLayoutGap="15px">
+                <mat-form-field fxFlex color="accent" appearance="fill" floatLabel="always">
+                      <mat-label>Choose a date</mat-label >
+                        <input matInput [(ngModel)]="dateSelected" [matDatepicker]="picker" [disabled]="true">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker  [disabled]="false"></mat-datepicker>
+                </mat-form-field>
+              <div>
+                <button mat-button class="btn__default btn__add" (click)="search()"><mat-icon>search</mat-icon> Search</button>       
+              </div>
+            </div>
+          </div>
+          <div class="bookings__time-grid">
+            <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+          </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Room Display">
+      <div class="bookings__time-grid">
+        <full-calendar #roomTimeGrid [options]="calendarRoomOption"></full-calendar>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Booking List">    
+      <div class="bookings-page__header">
+        <div fxFlex="30" class="bookings-page__search">
+            <mat-form-field fxFlex appearance="outline" floatLabel="always">
+              <mat-label>SEARCH GUEST'S NAME</mat-label>
+              <input matInput [(ngModel)]="searchGuestName" (ngModelChange)="searching()">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="10px" class="bookings-page__btn">
+            <button class="btn__default btn__add" mat-flat-button *ngIf="privsArray.add === 1"  (click)="addBooking({action: 'add', data:''})">
+              <mat-icon>today</mat-icon>
+              Add Booking
+            </button>      
+            <!-- <button class="btn__default btn__sub-add" mat-flat-button *ngIf="privsArray.add === 1"  (click)="addBooking({action: 'additional', data:''})">
+              <mat-icon>today</mat-icon>
+              Add Additional Guest
+            </button> -->
+        </div>
+      </div>
+      
+      <div class="page__body bookings">    
+        <div class="bookings-page__tbl">
+          <table class="table-list" mat-table [dataSource]="dataSource">  
+            <ng-container matColumnDef="booked_date">
+              <th class="container__date" mat-header-cell *matHeaderCellDef> Date </th>
+              <td class="container__date" mat-cell *matCellDef="let element"> {{element.booked_date | date: 'MM/dd/yyyy'}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="time_start">
+              <th mat-header-cell *matHeaderCellDef> Time </th>
+              <td mat-cell *matCellDef="let element">  {{element.time_start}} </td>
+            </ng-container>
+          
+          <ng-container matColumnDef="book_guest_name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td class="container__name" mat-cell *matCellDef="let element" >
+                  <span *ngIf="element.book_guest_name?.length > 20" [matTooltipPosition]="'below'" matTooltip="{{element.book_guest_name}}">  {{element.book_guest_name | slice:0:20 }}... </span>
+                  <span *ngIf="element.book_guest_name?.length <= 20" [matTooltipPosition]="'below'" matTooltip="{{element.book_guest_name}}"> {{element.book_guest_name}} </span>
+              </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="book_guest_number">
+              <th mat-header-cell *matHeaderCellDef> # </th>
+              <td mat-cell *matCellDef="let element"> {{element.book_guest_number}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="book_pax">
+              <th mat-header-cell *matHeaderCellDef> Pax </th>
+              <td class="container__pax" mat-cell *matCellDef="let element"> {{element.book_pax}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="service_name">
+              <th mat-header-cell *matHeaderCellDef> Services </th>
+            <td mat-cell *matCellDef="let element"> 
+                  <!--  {{element.service_id === 0 ? '' : element.total_pax}} -->             
+                  <div *ngIf="element.services_name" [matTooltip]="element.services_name"> 
+                      <span *ngIf="element.services_name?.length > 25">  {{element.services_name | slice:0:25 }}... </span>
+                      <span *ngIf="element.services_name?.length <= 25"> {{element.services_name}} </span> 
+                  </div>
+              </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="service_dur">
+              <th mat-header-cell *matHeaderCellDef> Duration </th>
+              <td class="container__pax" mat-cell *matCellDef="let element"> {{element.total_dur}} </td>
+            </ng-container>    
+            
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element">
+                  <div>
+                      <button mat-button class="btn__status" 
+                      [ngClass]="{
+                        'grey-status': element.booked_status === 5,
+                        'pink-status': element.booked_status === 4,
+                        'yellow-status': element.booked_status === 3,
+                        'red-status': element.booked_status === 2,
+                        'green-status': element.booked_status === 1,
+                        'blue-status': element.booked_status === 0
+                      }"
+                      mat-button [matMenuTriggerFor]="statusMenu">
+                          {{element.booked_status === 0 ? "Pending" 
+                          : element.booked_status === 1 ? "Completed" 
+                          : element.booked_status === 2 ? "Cancelled" 
+                          : element.booked_status === 3 ? "Arrived" 
+                          : element.booked_status === 4 ? "Spa Party" 
+                          : element.booked_status === 5 ? "Home Service"
+                          : '' }}
+                      </button>
+                      <mat-menu #statusMenu="matMenu" xPosition="after">
+                        <button (click)="updateBookingStatus(element, 0)" mat-menu-item [disabled]="element.booked_status === 0">Mark as Pending</button>
+                        <button (click)="updateBookingStatus(element, 1)" mat-menu-item [disabled]="element.booked_status === 1">Mark as Completed</button>
+                        <button (click)="updateBookingStatus(element, 2)" mat-menu-item [disabled]="element.booked_status === 2">Mark as Cancelled</button>
+                        <button (click)="updateBookingStatus(element, 3)" mat-menu-item [disabled]="element.booked_status === 3">Mark as Arrived</button>
+                        <button (click)="updateBookingStatus(element, 4)" mat-menu-item [disabled]="element.booked_status === 4">Mark as Spa Party</button>
+                        <button (click)="updateBookingStatus(element, 5)" mat-menu-item [disabled]="element.booked_status === 5">Mark as Home Service</button>
+                      </mat-menu>
+                  </div>
+              </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let element">
+                <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="15px">
+                    <button class="btn-icon__default btn-icon__edit" *ngIf="privsArray.update === 1" mat-icon-button (click)="addBooking({action: 'arrival-single', data: element})">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button class="btn-icon__default btn-icon__delete" *ngIf="privsArray.delete === 1" mat-icon-button (click)="alertMessage(element)" >
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                    <!-- <button *ngIf="element.book_pax > 1" mat-flat-button (click)="addBooking({action: 'arrival', data: element})">
+                        Add Guest Booking
+                    </button> -->
+                </div>
+              </td> 
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>      
+          <div class="no-result__wrapper" *ngIf="books?.length === 0">
+              <span class="no-result">No results found</span>
+          </div>
+        </div>
+        <mat-paginator
+                [length]="pageLength"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="pageSizeOptions"
+                (page)="handlePageEvent($event)">
+        </mat-paginator>
+      </div>
+    </mat-tab>
+
+
+
+    <!-- History Tab  -->
+
+    <mat-tab label="History">
+        <app-customers></app-customers>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

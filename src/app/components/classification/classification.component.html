@@ -1,0 +1,70 @@
+<div class="page__header">
+    <h2 class="page__title"><i class="fas fa-users"></i> Classification </h2>
+    <span class="breadcrumbs">Classification > <span class="current-page">View All Classification</span></span>
+  </div><!-- .page__header -->
+  
+  <div fxLayout="column" class="page__body">
+      <div class="page__table" fxLayout="row wrap" fxFlex>
+          <div class="disc__col disc-form" fxLayout="column">
+              <div mat-subheader> Classification Form</div>  
+              <form [formGroup]="classificationForm" fxLayout="column" fxLayoutGap="10px">
+                  <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>Classification Name</mat-label>
+                      <input matInput formControlName="cus_cat_name" type="text">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>Classification Description</mat-label>
+                      <input matInput formControlName="cus_cat_desc" type="text">
+                      <mat-icon matSuffix>percent</mat-icon>
+                  </mat-form-field>
+                    <button mat-flat-button class="btn__default btn__add" *ngIf="privsArray.add === 1" (click)="addClassification()"> {{actions ? 'Add' : 'Update'}} Classification </button>
+                    <button *ngIf="!actions" mat-flat-button class="btn__default btn__reset"> Reset </button>
+              </form>
+          </div>
+          <div class="disc__col disc-table"  fxLayout="column" fxFlex>
+              <div mat-subheader>Classification Table</div>   
+              <form>
+                  <div fxLayout="row">
+                      <mat-form-field appearance="outline">
+                          <mat-label>Search</mat-label>
+                          <input matInput [(ngModel)]="search" (ngModelChange)="searchClassification(search)">
+                          <mat-icon matSuffix>search</mat-icon>
+                      </mat-form-field>
+                  </div>         
+                  <div class="table">
+                      <table class="table-list" mat-table [dataSource]="dataSource">              
+                          <ng-container matColumnDef="cus_cat_name">
+                              <th fxFlex fxLayoutAlign="start start" mat-header-cell *matHeaderCellDef> Classification </th>
+                              <td fxFlex fxLayoutAlign="start start" mat-cell *matCellDef="let element"> {{element.cus_cat_name}} </td>
+                          </ng-container>
+                  
+                          <ng-container  matColumnDef="cus_cat_desc">
+                              <th fxFlex="30" fxLayoutAlign="start start"  mat-header-cell *matHeaderCellDef> Description</th>
+                              <td fxFlex="30" fxLayoutAlign="start start"  mat-cell *matCellDef="let element"> {{element.cus_cat_desc}} </td>
+                          </ng-container>
+
+                          <ng-container  matColumnDef="actions">
+                              <th fxFlex="30" fxLayoutAlign="start start"  mat-header-cell *matHeaderCellDef> Action</th>
+                              <td fxFlex="30" fxLayoutAlign="start start"  mat-cell *matCellDef="let element">
+                                <button class="btn-icon__default btn-icon__edit" mat-icon-button (click)="patchClassificationsValues(element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button class="btn-icon__default btn-icon__delete" mat-icon-button (click)="alertMessage(element)">
+                                    <mat-icon>delete_outline</mat-icon>
+                                </button>
+                              </td>
+                          </ng-container>
+
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>   
+                  </div>                           
+              
+                  <div class="no-result__wrapper" *ngIf="classifications?.length === 0">
+                      <span class="no-result">No results found</span>
+                  </div>
+                  
+              </form>
+          </div>
+      </div>
+  </div><!-- .page__body -->

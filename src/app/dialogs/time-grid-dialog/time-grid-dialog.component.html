@@ -1,0 +1,28 @@
+<h1 class="dialog-title" mat-dialog-title>Client Status:
+    <span fxFlex></span>
+    <button mat-icon-button matDialogClose="close"><mat-icon>clear</mat-icon></button>
+</h1>
+<div class="time-grid-dialog__wrapper" fxLayout="column">
+    <div class="time-grid__status">
+        <span class="time-grid__label">Status</span>
+        {{markedStatus}}
+        <mat-form-field class="width-100" appearance="fill" floatLabel="always">
+          <mat-label>Marked as:</mat-label>
+          <mat-select [(ngModel)]="markedStatus" [ngModelOptions]="{standalone: true}" >
+            <mat-option *ngFor="let mark of marked" [value]="mark"> {{mark}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-button class="btn__default btn__add width-100" (click)="savedMarked()"> Save Marked </button> 
+    </div>
+    <!-- <span class="time-grid__label">Transfer Therapist to:</span>
+    <mat-form-field class="width-100" appearance="fill" floatLabel="always">
+        <mat-label>Select a Therapist</mat-label>
+        <mat-select [(ngModel)]="therapist" [disabled]="members.length <= 0" [ngModelOptions]="{standalone: true}" readonly>
+        <mat-option [value]="''">None</mat-option>
+        <mat-option [value]="mem.mem_id" *ngFor="let mem of members" [disabled]="currentMemId === mem.mem_id">{{mem.mem_name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div mat-dialog-actions>
+        <button mat-button class="btn__default btn__add width-100" (click)="transfer()"> Transfer to other Therapist</button> 
+    </div> -->
+</div>

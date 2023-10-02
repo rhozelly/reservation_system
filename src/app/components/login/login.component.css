@@ -1,0 +1,56 @@
+.login {
+  height: 100%;
+  background: url("src/assets/images/app/background-blur-overlay.png") no-repeat center;
+  background-size: cover;
+  position: relative;
+}
+
+.login form {
+  width: 250px;
+  margin: 20% auto 0;
+}
+
+.login mat-form-field {
+  width: 100%;
+}
+
+.login-logo__wrapper {
+  width: 250px;
+  margin: 10% auto 0 auto;
+}
+
+.login-logo {
+  width: 100%;
+  height: auto;
+}
+
+.login-button {
+  background:  var(--red);
+  color: var(--yellow);
+  width: 100%;
+}
+
+.form__wrapper {
+  background: #0000009e;
+  width: 25%;
+  height: 100vh;
+}
+
+::ng-deep .login .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: var(--yellow);
+}
+
+::ng-deep .login  .mat-form-field-prefix, .mat-form-field-suffix {
+  color: var(--main);
+}
+
+::ng-deep .login  .mat-input-element {
+  color: var(--main) !Important;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .form__wrapper {
+    width: 80%;
+  }
+}

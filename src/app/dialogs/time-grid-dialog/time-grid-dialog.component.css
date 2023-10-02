@@ -1,0 +1,57 @@
+.time-grid-dialog__wrapper {
+    padding: 24px;
+}
+.time-grid-dialog__title {
+    color: #9fa4ba;
+}
+.time-grid-dialog__name {
+    font-size: 24px;
+}
+.time-grid-dialog__column {
+    margin-top: 16px;
+}
+.time-grid-dialog__field {
+    padding: 0px 10px 10px 0;
+    width: 100%;
+}
+.time-grid-dialog__input {
+    /* padding: 7px 16px;
+    background: #f3f3f3; */
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    min-height: 34px;
+    text-transform: capitalize;
+}
+.time-grid-dialog__label {
+    font-size: 14px;
+    color: #757575;
+    font-weight: 300;
+}
+.time-grid-dialog__sub-title {
+    display: none;
+    color: #b5b9ca;
+    text-transform: uppercase;
+    margin-top: 25px;
+}
+.time-grid-dialog__column{
+    width: 100%;
+}
+.tranfer__btn {
+    background: #267F98;
+    border-radius: 6px;
+    color: white;
+    font-weight: 300;
+    padding: 2px 25px;
+}
+.time-grid-dialog__right {
+    padding: 18px;
+    width: 100%;
+}
+
+.dialog-title {
+    padding: 26px 24px 0;
+}
+.width-100{
+    width: 100%;
+}

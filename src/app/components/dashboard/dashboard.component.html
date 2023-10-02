@@ -1,0 +1,83 @@
+<div class="page__header">
+  <h2 class="page__title"><i class="fas fa-home"></i> Dashboard</h2>
+  <span class="breadcrumbs"><i class="fas fa-home"></i> Dashboard > <span class="current-page">Main</span></span>
+</div><!-- .page__header -->
+<div class="dashboard__content">
+    <div class="dashboard" fxLayout="row wrap" fxLayoutGap="15px">
+        <div class="dashboard__content-left" fxLayout="column" fxLayoutGap="15px">
+            <div  fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="15px">
+                <div class="dashboard__column b-booking" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column">
+                        <span class="dashboard__numbers">{{totalBookings}}</span>  
+                        <span class="dashboard__title">Total Bookings</span>  
+                    </div>
+                    <div fxLayout="column">
+                        <mat-icon class="icon-booking">event_available</mat-icon>
+                    </div>
+                </div>          
+                <div  class="dashboard__column b-therapist" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column">
+                        <span class="dashboard__numbers">{{totalTherapist}}</span>  
+                        <span class="dashboard__title">Total Available Therapist</span>  
+                    </div>
+                    <div fxLayout="column">
+                        <mat-icon class="icon-therapist">person_3</mat-icon>
+                    </div>
+                </div>
+                <div class="dashboard__column b-rooms" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column">
+                        <span class="dashboard__numbers">{{totalRoom}}</span>  
+                        <span class="dashboard__title">Total Rooms</span>  
+                    </div>
+                    <div fxLayout="column"> 
+                        <mat-icon class="icon-rooms">home</mat-icon>
+                    </div>
+                </div>
+            </div>
+            
+            <div  fxLayout="row wrap" fxLayoutGap="15px">
+                <div class="dashboard__column b-rooms" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column">
+                        <span class="dashboard__numbers">{{allServices}}</span>  
+                        <span class="dashboard__title">All Services</span>  
+                    </div>
+                    <div fxLayout="column"> 
+                        <mat-icon class="icon-rooms">home_repair_service</mat-icon>
+                    </div>
+                </div>
+                <div class="dashboard__column b-booking" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column">
+                        <span class="dashboard__numbers">{{allBookings}}</span>  
+                        <span class="dashboard__title">All Bookings</span>  
+                    </div>
+                    <div fxLayout="column">
+                        <mat-icon class="icon-booking">calendar_month</mat-icon>
+                    </div>
+                </div>     
+                <div  class="dashboard__column b-therapist" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column">
+                        <span class="dashboard__numbers">{{allTherapist}}</span>  
+                        <span class="dashboard__title">All Therapist</span>  
+                    </div>
+                    <div fxLayout="column">
+                        <mat-icon class="icon-therapist">person_3</mat-icon>
+                    </div>
+                </div>     
+            </div>
+        </div>
+
+        <div class="dashboard__content-right"  fxLayout="column" fxFlex>
+            <div class="dashboard-right__header">
+                <span class="dashboard__title">Therapist for Today</span>
+            </div>
+            <div class="dashboard-right__content">
+                <div fxLayout="column" class="dashboard__lists">
+                    <span *ngIf="avail.length <= 0">NO RESULT FOUND</span>
+                    <div fxLayout="row" class="dashboard__list" *ngFor="let v of avail">
+                        <div>{{v.mem_name}}</div>
+                    </div>                        
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- .page__body -->

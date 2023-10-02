@@ -1,0 +1,81 @@
+
+.table-header {
+    text-transform: uppercase;
+    color: #586363;
+    font-weight: 600;
+}
+.table-content {
+    color: #020C0B;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.green-status {    
+    color: #00864e;
+    background-color: #ccf6e4;
+}
+.yellow-status {    
+    color: #9d5228;
+    background-color: #fde6d8;
+}
+.red-status {    
+    color: #932338;
+    background-color: #fad7dd;
+}
+.members-page__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.members-list-tbl {
+    width: 100%;
+}
+::ng-deep .members-list-tbl thead th {
+    padding: 0 !important;
+    color: #b5b5c3;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    border-bottom: 1px dashed #eff2f5 !important;
+}
+::ng-deep .members-list-tbl tbody td {
+    border: 0 none !important;
+    padding: 20px 10px !important;
+    font-family: 'Poppins', sans-serif;
+    border-bottom: 1px dashed #eff2f5 !important;
+}
+::ng-deep .members-list-tbl tbody td:first-child {
+    font-weight: 600;
+    width: 30%;
+}
+::ng-deep .members-list-tbl tbody td:nth-child(2),
+::ng-deep .members-list-tbl tbody td:nth-child(4) {
+    width: 20%;
+}
+/* .status-badge {
+    padding: 2px 15px;
+    line-height: normal;
+    border-radius: 13px;
+} */
+::ng-deep .mat-paginator-container {
+    justify-content: space-between !important;
+    padding: 0 !important;
+    margin-top: 20px;
+}
+::ng-deep .mat-paginator-page-size-label {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+.members-page__search{
+    width: 40%;
+}
+.members-page__header {
+ margin-top: -18px;
+}
+.progress-loader {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 13px;
+}

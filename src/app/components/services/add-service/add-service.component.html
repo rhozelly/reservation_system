@@ -1,0 +1,55 @@
+<div class="page__header">
+    <h2 class="page__title"><span class="subheader-icon--service"></span>
+        <button mat-icon-button (click)="back()">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        {{actionUrl}} Services
+    </h2>
+    <span class="breadcrumbs"><span class="subheader-icon--service"></span> View Services >
+        <span class="current-page">{{actionUrl}} Services</span>
+    </span>
+</div><!-- .page__header -->
+<div class="page__body">  
+  <div class="service-add__wrapper">      
+    <div mat-subheader>Add New Service</div>  
+    <div fxLayout="row">
+        <form [formGroup]="serviceForm" fxLayout="column" fxLayoutGap="15px" fxFlex>          
+            <div fxLayout="row wrap" fxLayoutGap="15px" fxFlex>
+                <mat-form-field appearance="fill" fxFlex floatLabel="always">
+                  <mat-label>Service Code</mat-label>
+                  <input matInput formControlName="service_code">
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex floatLabel="always">
+                  <mat-label>Item Code</mat-label>
+                  <input matInput formControlName="item_code" maxlength="25">
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" formControlName="service_name">
+            </mat-form-field>
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Duration</mat-label>
+                <input matInput type="number" formControlName="service_dur">
+                <mat-hint>(Duration format 1 = 1 hour, 1.5 = 1.5, etc..)</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Service Group</mat-label>
+                <mat-select formControlName="service_group">
+                  <mat-option *ngFor="let sg of servicesGroup" [value]="sg.service_group_id">
+                    {{sg.service_group_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Price</mat-label>
+                  <input matInput type="number" formControlName="service_price">
+                  <mat-icon matPrefix>₱ </mat-icon>
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign="end end">
+                <button fxFlex="25" mat-flat-button class="btn__default btn__add" (click)="submit()">Save</button>
+            </div>
+        </form>
+    </div>
+  </div><!-- .add-service-page__header -->
+</div><!-- .page__body -->

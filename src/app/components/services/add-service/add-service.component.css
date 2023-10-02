@@ -1,0 +1,18 @@
+
+.status {
+    color: #932338;
+    background-color: #fad7dd;
+}
+.service-add__wrapper{
+    border: 1px solid #e0e0e0;
+    padding: 40px;
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+/* Sub header Icons */
+::ng-deep .subheader-icon--service::before {    
+    content: "\e05c";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 800;
+}
